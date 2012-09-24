@@ -37,6 +37,3 @@ class TestBoard(unittest.TestCase):
     desired_result = line_1.join([line_2,
       line_3, line_4, line_5, line_6, line_7, line_8, line_9, line_10, line_11])
     self.assertEqual(board.as_string(), desired_result)
-
-#if __name__ == '__main__':
-#  unittest.main()
