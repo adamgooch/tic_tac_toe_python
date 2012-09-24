@@ -1,17 +1,19 @@
 import unittest
 import sys
-from cStringIO import StringIO
 
 from src.game_engine import GameEngine
+from mock import *
 
 class TestGameEngine(unittest.TestCase):
 
   def setUp(self):
-    real_stdout = sys.stdout
-    self.my_stdout = StringIO()
-    sys.stdout = self.my_stdout
+    self.mock_stdout = Mock()
+    sys.stdout = self.mock_stdout
+    self.mock_board = Mock()
+    self.game = GameEngine(self.mock_board)
 
-  def test_welcome_screen(self):
-    game = GameEngine()
-    game.start()
-    self.assertEqual(self.my_stdout.getvalue(), 'Welcome To Tic Tac Toe\n')
+  def test_displays_board(self):
+    self.game.start()
+    self.mock_board.as_string.assert_called_with()
+
+

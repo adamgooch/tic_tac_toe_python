@@ -1,4 +1,4 @@
-from src.game_engine import GameEngine
+from src.game import Game
 
-game = GameEngine()
+game = Game()
 game.start()

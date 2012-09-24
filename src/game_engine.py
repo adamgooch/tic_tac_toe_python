@@ -1,5 +1,8 @@
 class GameEngine:
 
+  def __init__(self, board):
+    self.board = board
+
   def start(self):
-    print('Welcome To Tic Tac Toe')
+    print(self.board.as_string())
 

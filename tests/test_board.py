@@ -17,7 +17,7 @@ class TestBoard(unittest.TestCase):
     line_9 = "     |     |     \n"
     line_10 = "  6  |  7  |  8  \n"
     line_11 = "     |     |     \n"
-    desired_result = line_1.join([line_2,
+    desired_result = ''.join([line_1, line_2,
       line_3, line_4, line_5, line_6, line_7, line_8, line_9, line_10, line_11])
     self.assertEqual(board.as_string(), desired_result)
 
@@ -34,6 +34,6 @@ class TestBoard(unittest.TestCase):
     line_9 = "     |     |     \n"
     line_10 = "  6  |  7  |  8  \n"
     line_11 = "     |     |     \n"
-    desired_result = line_1.join([line_2,
+    desired_result = ''.join([line_1, line_2,
       line_3, line_4, line_5, line_6, line_7, line_8, line_9, line_10, line_11])
     self.assertEqual(board.as_string(), desired_result)

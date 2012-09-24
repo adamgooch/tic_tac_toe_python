@@ -16,5 +16,7 @@ class Board:
     line_10 = "  " + self.board[6] + "  |  " + self.board[7] + "  |  " + self.board[8] + "  \n"
     line_11 = "     |     |     \n"
 
-    return line_1.join([line_2, line_3, line_4, line_5, line_6, line_7, line_8, line_9, line_10, line_11])
+    return ''.join([line_1, line_2, line_3, line_4, line_5, line_6, line_7, line_8, line_9, line_10, line_11])
 
+  def stupid(self):
+    return "What?"
