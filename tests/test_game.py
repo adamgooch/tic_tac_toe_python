@@ -7,21 +7,20 @@ from mock import *
 class TestGame(unittest.TestCase):
 
   def setUp(self):
-    self.real_stdout = sys.stdout
-    self.mock_stdout = Mock()
-    sys.stdout = self.mock_stdout
     self.mock_io = Mock()
-    self.game = Game(self.mock_io)
+    self.mock_engine = Mock()
+    self.game = Game(self.mock_io, self.mock_engine)
 
-  def tearDown(self):
-    sys.stdout = self.real_stdout
+  def test_begin_greets_the_user(self):
+    self.game.begin()
+    self.mock_io.assert_has_calls([call.greet()])
 
-  def test_start_gives_welcome_message(self):
-    self.game.start()
-    self.mock_stdout.assert_has_calls([call.write('Welcome To Tic Tac Toe')])
-
-  def test_start_sets_the_play_type(self):
+  def test_begin_sets_the_play_type(self):
     self.mock_io.get_play_type.return_value = 2
-    self.game.start()
+    self.game.begin()
     self.mock_io.assert_has_calls([call.get_play_type()])
-    self.assertEqual(self.game.play_type, self.game.P_VS_P)
+    self.assertEqual(self.game.play_type, self.game.PLAYER_VS_PLAYER)
+
+  def test_begin_starts_the_game_engine(self):
+    self.game.begin()
+    self.mock_engine.assert_has_calls([call.start(self.game.play_type)])
