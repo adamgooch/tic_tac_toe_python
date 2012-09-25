@@ -68,6 +68,12 @@ class TestIo(unittest.TestCase):
      |     |     
   %s  |  %s  |  %s  
      |     |     
-""" % (1, 2, 3, 4, 'X', 6, 7, 8, 9)
+""" % ('1', '2', '3', '4', 'X', '6', '7', '8', '9')
     self.io.display_board(['1', '2', '3', '4', 'X', '6', '7', '8', '9'])
     self.mock_stdout.assert_has_calls([call.write(expected_result)])
+
+  def test_display_game_over_message_shows_appropriate_message(self):
+    self.io.display_game_over_message('Nobody')
+    self.mock_stdout.assert_has_calls([call.write('Nobody Wins!')])
+    self.io.display_game_over_message('X')
+    self.mock_stdout.assert_has_calls([call.write('X Wins!')])

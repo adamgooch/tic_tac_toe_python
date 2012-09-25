@@ -40,3 +40,8 @@ class TestGameEngine(unittest.TestCase):
     self.engine.start(src.game.PLAYER_VS_PLAYER)
     self.mock_board_analyzer.assert_has_calls([call.game_over(self.board)])
 
+  def test_start_displays_game_over_message_when_game_is_over(self):
+    self.mock_board_analyzer.game_over.return_value = True
+    self.engine.start(src.game.PLAYER_VS_PLAYER)
+    self.mock_io.assert_has_calls(
+        [call.display_game_over_message(self.mock_board_analyzer.winner)])

@@ -12,6 +12,8 @@ class GameEngine:
     while not(self.board_analyzer.game_over(self.board)):
       self.io.display_board(self.board)
       self.place_move()
+    self.io.display_board(self.board)
+    self.io.display_game_over_message(self.board_analyzer.winner)
 
   def place_move(self):
     move = self.io.get_move()

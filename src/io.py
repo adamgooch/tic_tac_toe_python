@@ -49,6 +49,9 @@ class Io:
      |     |     
 """ % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8])
 
+  def display_game_over_message(self, winner):
+    print """%s Wins!""" % winner
+
   def clear_terminal(self):
     print chr(27) + "[2J"
 
