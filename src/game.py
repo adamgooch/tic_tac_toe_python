@@ -1,10 +1,11 @@
 from io import Io
+from board import Board
+
+PLAYER_VS_AI = 1
+PLAYER_VS_PLAYER = 2
+AI_VS_AI = 3
 
 class Game:
-
-  PLAYER_VS_AI = 1
-  PLAYER_VS_PLAYER = 2
-  AI_VS_AI = 3
 
   def __init__(self, io, engine):
     self.io = io

@@ -39,8 +39,8 @@ class TestIo(unittest.TestCase):
     self.assertEqual(3, self.io.get_play_type())
 
   def test_get_play_type_rejects_invalid_numbers(self):
-    return_values = ["2\n", "4\n"]
-    self.mock_stdin.readline.side_effect = lambda: return_values.pop()
+    return_values = ["4\n", "2\n"]
+    self.mock_stdin.readline.side_effect = return_values
     self.io.get_play_type()
     self.mock_stdout.assert_has_calls([call.write('Invalid Play Type')])
 
@@ -50,8 +50,24 @@ class TestIo(unittest.TestCase):
     self.mock_stdout.assert_has_calls([call.write('What is your move? ')])
 
   def test_get_move_rejects_invalid_input(self):
-    return_values = ["2\n", "what\n"]
-    self.mock_stdin.readline.side_effect = lambda: return_values.pop()
+    return_values = ["what\n", "2\n"]
+    self.mock_stdin.readline.side_effect = return_values
     self.io.get_move()
     self.mock_stdout.assert_has_calls([call.write('Invalid Entry')])
 
+  def test_display_board_prints_the_board(self):
+    expected_result = """
+     |     |     
+  %s  |  %s  |  %s  
+     |     |     
+-----+-----+-----
+     |     |     
+  %s  |  %s  |  %s  
+     |     |     
+-----+-----+-----
+     |     |     
+  %s  |  %s  |  %s  
+     |     |     
+""" % (1, 2, 3, 4, 'X', 6, 7, 8, 9)
+    self.io.display_board(['1', '2', '3', '4', 'X', '6', '7', '8', '9'])
+    self.mock_stdout.assert_has_calls([call.write(expected_result)])
