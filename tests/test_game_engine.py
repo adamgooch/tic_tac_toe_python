@@ -7,14 +7,14 @@ from mock import *
 
 class TestGameEngine(unittest.TestCase):
 
-  moves = [2]
+  moves = [2, 3]
 
   def setUp(self):
     self.board = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
     self.mock_io = Mock()
     self.mock_board_analyzer = Mock()
     self.engine = GameEngine(self.board, self.mock_io, self.mock_board_analyzer)
-    self.mock_io.get_move.return_value = self.moves[0]
+    self.mock_io.get_move.side_effect = self.moves
 
   def test_start_displays_board(self):
     return_values = [False, True]
@@ -41,7 +41,15 @@ class TestGameEngine(unittest.TestCase):
     self.mock_board_analyzer.assert_has_calls([call.game_over(self.board)])
 
   def test_start_displays_game_over_message_when_game_is_over(self):
-    self.mock_board_analyzer.game_over.return_value = True
+    return_values = [False, True]
+    self.mock_board_analyzer.game_over.side_effect = return_values
     self.engine.start(src.game.PLAYER_VS_PLAYER)
     self.mock_io.assert_has_calls(
         [call.display_game_over_message(self.mock_board_analyzer.winner)])
+
+  def test_place_move_allows_two_players_to_play(self):
+    return_values = [False, False, True]
+    self.mock_board_analyzer.game_over.side_effect = return_values
+    self.engine.start(src.game.PLAYER_VS_PLAYER)
+    self.assertEqual(self.board[self.moves[0] - 1], 'X')
+    self.assertEqual(self.board[self.moves[1] - 1], 'O')
