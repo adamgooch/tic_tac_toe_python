@@ -32,7 +32,7 @@ class TestGameEngine(unittest.TestCase):
     return_values = [False, True]
     self.mock_board_analyzer.game_over.side_effect = return_values
     self.engine.start(src.game.PLAYER_VS_PLAYER)
-    self.assertEqual(self.board[self.moves[0] - 1], 'X')
+    self.assertEqual(self.board[self.moves[0]], 'X')
 
   def test_start_checks_if_game_is_over(self):
     return_values = [False, True]
@@ -51,5 +51,15 @@ class TestGameEngine(unittest.TestCase):
     return_values = [False, False, True]
     self.mock_board_analyzer.game_over.side_effect = return_values
     self.engine.start(src.game.PLAYER_VS_PLAYER)
-    self.assertEqual(self.board[self.moves[0] - 1], 'X')
-    self.assertEqual(self.board[self.moves[1] - 1], 'O')
+    self.assertEqual(self.board[self.moves[0]], 'X')
+    self.assertEqual(self.board[self.moves[1]], 'O')
+
+  def test_place_move_does_not_allow_move_to_be_placed_in_same_square(self):
+    self.moves = [2, 2]
+    self.mock_io.get_move.side_effect = self.moves
+    return_values = [False, False, True]
+    self.mock_board_analyzer.game_over.side_effect = return_values
+    self.engine.start(src.game.PLAYER_VS_PLAYER)
+    self.assertEqual(self.board[self.moves[0]], 'X')
+    self.assertEqual(self.board[self.moves[1]], 'X')
+

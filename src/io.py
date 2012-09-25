@@ -22,7 +22,8 @@ class Io:
       self.get_play_type()
 
   def get_move(self):
-    return self.get_valid_number('What is your move? ')
+    move = self.get_valid_number('What is your move? ')
+    return move - 1
 
   def get_valid_number(self, prompt):
     while True:

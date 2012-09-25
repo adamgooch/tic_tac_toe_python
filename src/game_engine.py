@@ -19,9 +19,18 @@ class GameEngine:
   def place_move(self):
     if self.player_one_turn:
       move = self.io.get_move()
-      self.board[move - 1] = 'X'
-      self.player_one_turn = False
+      if not self.taken(move):
+        self.board[move] = 'X'
+        self.player_one_turn = False
     else:
       move = self.io.get_move()
-      self.board[move - 1] = 'O'
-      self.player_one_turn = True
+      if not self.taken(move):
+        self.board[move] = 'O'
+        self.player_one_turn = True
+
+  def taken(self, move):
+    if self.board[move] == 'X':
+      return True
+    if self.board[move] == 'O':
+      return True
+    return False
