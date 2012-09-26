@@ -70,7 +70,7 @@ class TestGameEngine(unittest.TestCase):
     return_values = [False, False, True]
     self.mock_board_analyzer.game_over.side_effect = return_values
     self.engine.start(src.game.PLAYER_VS_AI)
-    self.mock_ai.assert_has_calls([call.get_move()])
+    self.mock_ai.assert_has_calls([call.get_move(self.board)])
 
   def test_start_allows_ai_to_play_against_itself(self):
     ai_moves = [5, 6]
@@ -78,6 +78,6 @@ class TestGameEngine(unittest.TestCase):
     return_values = [False, False, True]
     self.mock_board_analyzer.game_over.side_effect = return_values
     self.engine.start(src.game.AI_VS_AI)
-    self.mock_ai.assert_has_calls([call.get_move(), call.get_move()])
+    self.mock_ai.assert_has_calls([call.get_move(self.board), call.get_move(self.board)])
 
 
