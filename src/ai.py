@@ -13,19 +13,21 @@ class Ai:
 
   def best_move(self, board):
       player = self.PLAYER_O
+      alpha = -sys.maxint
+      beta = sys.maxint
       available_squares = self.board_analyzer.get_available_squares(board)
       best_score = sys.maxint
       best_square = available_squares[0]
       for square in available_squares:
         new_board = copy(board)
         new_board[square] = self.player_mark(player)
-        score = self.negamax(new_board, -player)
+        score = self.negamax(new_board, -player, alpha, beta)
         if score < best_score:
           best_score = score
           best_square = square
       return best_square
 
-  def negamax(self, board, player):
+  def negamax(self, board, player, alpha, beta):
     if self.board_analyzer.game_over(board):
       return player * self.value_of_node()
     maximum = -sys.maxint
@@ -33,9 +35,13 @@ class Ai:
     for square in available_squares:
       new_board = copy(board)
       new_board[square] = self.player_mark(player)
-      result = -self.negamax(new_board, -player)
+      result = -self.negamax(new_board, -player, -beta, -alpha)
       if result > maximum:
         maximum = result
+      if result > alpha:
+        alpha = result
+      if alpha >= beta:
+        return alpha
     return maximum
 
   def player_mark(self, player):
