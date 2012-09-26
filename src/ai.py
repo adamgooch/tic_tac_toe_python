@@ -7,12 +7,11 @@ class Ai:
   PLAYER_O = 1
   PLAYER_X = -1
 
-  def get_move(self, board):
+  def get_move(self, board, player):
     self.board_analyzer = BoardAnalyzer()
-    return self.best_move(board)
+    return self.best_move(board, player)
 
-  def best_move(self, board):
-      player = self.PLAYER_O
+  def best_move(self, board, player):
       alpha = -sys.maxint
       beta = sys.maxint
       available_squares = self.board_analyzer.get_available_squares(board)

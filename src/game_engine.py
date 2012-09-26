@@ -23,13 +23,13 @@ class GameEngine:
       if not self.play_type == game.AI_VS_AI:
         move = self.io.get_move()
       else:
-        move = self.ai.get_move(self.board)
+        move = self.ai.get_move(self.board, self.ai.PLAYER_X)
       if not self.taken(move):
         self.board[move] = 'X'
         self.player_one_turn = False
     else:
       if not self.play_type == game.PLAYER_VS_PLAYER:
-        move = self.ai.get_move(self.board)
+        move = self.ai.get_move(self.board, self.ai.PLAYER_O)
       else:
         move = self.io.get_move()
       if not self.taken(move):
