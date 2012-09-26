@@ -12,8 +12,9 @@ class TestGameEngine(unittest.TestCase):
   def setUp(self):
     self.board = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
     self.mock_io = Mock()
+    self.mock_ai = Mock()
     self.mock_board_analyzer = Mock()
-    self.engine = GameEngine(self.board, self.mock_io, self.mock_board_analyzer)
+    self.engine = GameEngine(self.board, self.mock_io, self.mock_ai, self.mock_board_analyzer)
     self.mock_io.get_move.side_effect = self.moves
 
   def test_start_displays_board(self):
@@ -62,4 +63,21 @@ class TestGameEngine(unittest.TestCase):
     self.engine.start(src.game.PLAYER_VS_PLAYER)
     self.assertEqual(self.board[self.moves[0]], 'X')
     self.assertEqual(self.board[self.moves[1]], 'X')
+
+  def test_place_move_allows_ai_to_move_second(self):
+    ai_moves = [5]
+    self.mock_ai.get_move.side_effect = ai_moves
+    return_values = [False, False, True]
+    self.mock_board_analyzer.game_over.side_effect = return_values
+    self.engine.start(src.game.PLAYER_VS_AI)
+    self.mock_ai.assert_has_calls([call.get_move()])
+
+  def test_start_allows_ai_to_play_against_itself(self):
+    ai_moves = [5, 6]
+    self.mock_ai.get_move.side_effect = ai_moves
+    return_values = [False, False, True]
+    self.mock_board_analyzer.game_over.side_effect = return_values
+    self.engine.start(src.game.AI_VS_AI)
+    self.mock_ai.assert_has_calls([call.get_move(), call.get_move()])
+
 

@@ -1,10 +1,12 @@
+import game
 from board import Board
 
 class GameEngine:
 
-  def __init__(self, board, io, board_analyzer):
+  def __init__(self, board, io, ai, board_analyzer):
     self.board = board
     self.io = io
+    self.ai = ai
     self.board_analyzer = board_analyzer
 
   def start(self, play_type):
@@ -18,12 +20,18 @@ class GameEngine:
 
   def place_move(self):
     if self.player_one_turn:
-      move = self.io.get_move()
+      if not self.play_type == game.AI_VS_AI:
+        move = self.io.get_move()
+      else:
+        move = self.ai.get_move(self.board)
       if not self.taken(move):
         self.board[move] = 'X'
         self.player_one_turn = False
     else:
-      move = self.io.get_move()
+      if not self.play_type == game.PLAYER_VS_PLAYER:
+        move = self.ai.get_move(self.board)
+      else:
+        move = self.io.get_move()
       if not self.taken(move):
         self.board[move] = 'O'
         self.player_one_turn = True
