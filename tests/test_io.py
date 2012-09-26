@@ -8,6 +8,7 @@ class TestIo(unittest.TestCase):
 
   def setUp(self):
     self.io = Io()
+    self.board = ['1', '2', '3', '4', 'X', '6', '7', '8', '9']
 
     self.mock_stdin = Mock(spec=sys.stdin)
     self.real_stdin = sys.stdin
@@ -23,14 +24,12 @@ class TestIo(unittest.TestCase):
 
   def test_greet_welcomes_the_user(self):
     self.io.greet()
-    self.mock_stdout.assert_has_calls([call.write('Welcome to Tic Tac Toe')])
+    self.mock_stdout.assert_has_calls([call.write(self.io.GREETING)])
 
   def test_get_play_type_presents_the_list_of_play_types(self):
     self.mock_stdin.readline.return_value = "3\n"
     self.io.get_play_type()
-    self.mock_stdout.assert_has_calls([call.write('1: Player vs. Computer'),
-                                       call.write('2: Player vs. Player'),
-                                       call.write('3: Computer vs. Computer')], any_order=True)
+    self.mock_stdout.assert_has_calls([call.write(''.join(self.io.SHOW_PLAY_TYPES))])
 
   def test_get_play_type_returns_a_valid_play_type(self):
     self.mock_stdin.readline.return_value = "1\n"
@@ -42,38 +41,47 @@ class TestIo(unittest.TestCase):
     return_values = ["4\n", "2\n"]
     self.mock_stdin.readline.side_effect = return_values
     self.io.get_play_type()
-    self.mock_stdout.assert_has_calls([call.write('Invalid Play Type')])
+    self.mock_stdout.assert_has_calls([call.write(self.io.INVALID_PLAY_TYPE)])
 
   def test_get_move_asks_for_the_move(self):
     self.mock_stdin.readline.return_value = "1\n"
-    self.io.get_move()
-    self.mock_stdout.assert_has_calls([call.write('What is your move? ')])
+    self.io.get_move(self.board)
+    self.mock_stdout.assert_has_calls([call.write(self.io.MOVE_QUERY)])
 
   def test_get_move_rejects_invalid_input(self):
-    return_values = ["what\n", "2\n"]
+    return_values = ["invalid\n", "2\n"]
     self.mock_stdin.readline.side_effect = return_values
-    self.io.get_move()
-    self.mock_stdout.assert_has_calls([call.write('Invalid Entry')])
+    self.io.get_move(self.board)
+    self.mock_stdout.assert_has_calls([call.write(self.io.INVALID_ENTRY)])
+
+  def test_get_move_rejects_numbers_that_arent_playable(self):
+    return_values = ["10\n", "2\n"]
+    self.mock_stdin.readline.side_effect = return_values
+    self.io.get_move(self.board)
+    self.mock_stdout.assert_has_calls([call.write(self.io.INVALID_MOVE)])
 
   def test_display_board_prints_the_board(self):
     expected_result = """
-     |     |     
-  %s  |  %s  |  %s  
-     |     |     
------+-----+-----
-     |     |     
-  %s  |  %s  |  %s  
-     |     |     
------+-----+-----
-     |     |     
-  %s  |  %s  |  %s  
-     |     |     
-""" % ('1', '2', '3', '4', 'X', '6', '7', '8', '9')
-    self.io.display_board(['1', '2', '3', '4', 'X', '6', '7', '8', '9'])
+         |     |
+      %s  |  %s  |  %s
+         |     |
+    -----+-----+-----
+         |     |
+      %s  |  %s  |  %s
+         |     |
+    -----+-----+-----
+         |     |
+      %s  |  %s  |  %s
+         |     |
+    """ % ('1', '2', '3', '4', 'X', '6', '7', '8', '9')
+    self.io.display_board(self.board)
     self.mock_stdout.assert_has_calls([call.write(expected_result)])
 
   def test_display_game_over_message_shows_appropriate_message(self):
     self.io.display_game_over_message('Nobody')
-    self.mock_stdout.assert_has_calls([call.write('Nobody Wins!')])
+    self.mock_stdout.assert_has_calls([
+      call.write(str('Nobody ' + self.io.WINNING_MESSAGE).center(self.io.MESSAGE_WIDTH))])
     self.io.display_game_over_message('X')
-    self.mock_stdout.assert_has_calls([call.write('X Wins!')])
+    self.mock_stdout.assert_has_calls([
+      call.write(str('X ' + self.io.WINNING_MESSAGE).center(self.io.MESSAGE_WIDTH))])
+

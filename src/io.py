@@ -1,29 +1,43 @@
 class Io:
 
+  PLAY_TYPES = 3
+  MESSAGE_WIDTH = 26
+
+  SHOW_PLAY_TYPES = """
+There are 3 ways to play
+------------------------
+1: Player vs. Computer
+2: Player vs. Player
+3: Computer vs. Computer
+"""
+  GREETING = 'Welcome to Tic Tac Toe\n'
+  PLAY_TYPE_QUERY = 'How do you want to play? '
+  INVALID_PLAY_TYPE = 'Invalid Play Type'
+  MOVE_QUERY = 'What is your move? '
+  INVALID_ENTRY = 'Invalid Entry\n'
+  INVALID_MOVE = 'Invalid Move\n'
+  WINNING_MESSAGE = 'WINS!\n'
+
   def greet(self):
-    print('Welcome to Tic Tac Toe')
-    print
+    print self.GREETING
 
   def get_play_type(self):
-    print('There are 3 ways to play')
-    print('------------------------')
-    print('1: Player vs. Computer')
-    print('2: Player vs. Player')
-    print('3: Computer vs. Computer')
-    print
-    play_type = self.get_valid_number('How do you want to play? ')
-    print
-    if play_type < 4 and play_type > 0:
-      return play_type
-    else:
-      self.clear_terminal()
-      print('Invalid Play Type')
-      print
-      self.get_play_type()
+    while True:
+      print ''.join(self.SHOW_PLAY_TYPES)
+      play_type = self.get_valid_number(self.PLAY_TYPE_QUERY)
+      if play_type <= self.PLAY_TYPES and play_type > 0:
+        return play_type
+      else:
+        self.clear_terminal()
+        print(self.INVALID_PLAY_TYPE)
 
-  def get_move(self):
-    move = self.get_valid_number('What is your move? ')
-    return move - 1
+  def get_move(self, board):
+    while True:
+      user_input = self.get_valid_number(self.MOVE_QUERY)
+      if user_input > 0 and user_input <= len(board):
+        return user_input - 1 #minus 1 accounts for 0 based array
+      else:
+        print(self.INVALID_MOVE)
 
   def get_valid_number(self, prompt):
     while True:
@@ -32,26 +46,27 @@ class Io:
         move = int(user_input)
         return move
       except:
-        print('Invalid Entry')
+        print(self.INVALID_ENTRY)
 
   def display_board(self, board):
     self.clear_terminal()
     print """
-     |     |     
-  %s  |  %s  |  %s  
-     |     |     
------+-----+-----
-     |     |     
-  %s  |  %s  |  %s  
-     |     |     
------+-----+-----
-     |     |     
-  %s  |  %s  |  %s  
-     |     |     
-""" % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8])
+         |     |
+      %s  |  %s  |  %s
+         |     |
+    -----+-----+-----
+         |     |
+      %s  |  %s  |  %s
+         |     |
+    -----+-----+-----
+         |     |
+      %s  |  %s  |  %s
+         |     |
+    """ % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8])
 
   def display_game_over_message(self, winner):
-    print """%s Wins!""" % winner
+    full_message = ' '.join([winner, self.WINNING_MESSAGE])
+    print str(full_message).center(self.MESSAGE_WIDTH)
 
   def clear_terminal(self):
     print chr(27) + "[2J"
