@@ -1,13 +1,12 @@
 #Welcome To Tic Tac Toe
-##Python Style
 
 This is a console tic tac toe game that you can play in one of three ways.
 
-*Play against the computer (go ahead, try to win)
-*Play against a friend
-*Watch the computer play against itself (if you blink, you'll miss it.)
+1. Play against the computer (go ahead, try to win)
+2. Play against a friend
+3. Watch the computer play against itself (if you blink, you'll miss it.)
 
-To play the game, `cd` into the ttt directory then enter:
+To play the game, `cd` into the tic_tac_toe_python directory then enter:
 
     python play_game.py
 
@@ -20,6 +19,6 @@ Unpack the downloaded file then `cd` into the unpacked file and run:
 
     python setup.py install
 
-To run the tests, `cd` into the ttt directory and enter:
+To run the tests, `cd` into the tic_tac_toe_python directory and enter:
 
     python -m unittest discover
