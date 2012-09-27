@@ -1,7 +1,9 @@
+import sys
 import game
-from board import Board
 
 class GameEngine:
+
+  QUIT = -1
 
   def __init__(self, board, io, ai, board_analyzer):
     self.board = board
@@ -20,25 +22,43 @@ class GameEngine:
 
   def place_move(self):
     if self.player_one_turn:
-      if not self.play_type == game.AI_VS_AI:
-        move = self.io.get_move(self.board)
-      else:
-        move = self.ai.get_move(self.board, self.ai.PLAYER_X)
-      if not self.taken(move):
+      move = self.get_player_one_move()
+      if self.available(move):
         self.board[move] = 'X'
         self.player_one_turn = False
     else:
-      if not self.play_type == game.PLAYER_VS_PLAYER:
-        move = self.ai.get_move(self.board, self.ai.PLAYER_O)
-      else:
-        move = self.io.get_move(self.board)
-      if not self.taken(move):
+      move = self.get_player_two_move() 
+      if self.available(move):
         self.board[move] = 'O'
         self.player_one_turn = True
 
-  def taken(self, move):
+  def get_player_one_move(self):
+    if self.human_is_playing():
+      move = self.io.get_move(self.board)
+      if move == self.QUIT:
+        sys.exit()
+    else:
+      move = self.ai.get_move(self.board, self.ai.PLAYER_X)
+    return move
+
+  def get_player_two_move(self):
+    if self.ai_is_playing():
+      move = self.ai.get_move(self.board, self.ai.PLAYER_O)
+    else:
+      move = self.io.get_move(self.board)
+      if move == self.QUIT:
+        sys.exit()
+    return move
+
+  def human_is_playing(self):
+    return False if self.play_type == game.AI_VS_AI else True
+
+  def ai_is_playing(self):
+    return False if self.play_type == game.PLAYER_VS_PLAYER else True
+
+  def available(self, move):
     if self.board[move] == 'X':
-      return True
+      return False
     if self.board[move] == 'O':
-      return True
-    return False
+      return False
+    return True

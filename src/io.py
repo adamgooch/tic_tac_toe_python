@@ -13,7 +13,7 @@ There are 3 ways to play
   GREETING = 'Welcome to Tic Tac Toe\n'
   PLAY_TYPE_QUERY = 'How do you want to play? '
   INVALID_PLAY_TYPE = 'Invalid Play Type'
-  MOVE_QUERY = 'What is your move? '
+  MOVE_QUERY = '(0 to Quit) What is your move? '
   INVALID_ENTRY = 'Invalid Entry\n'
   INVALID_MOVE = 'Invalid Move\n'
   WINNING_MESSAGE = 'WINS!\n'
@@ -34,7 +34,7 @@ There are 3 ways to play
   def get_move(self, board):
     while True:
       user_input = self.get_valid_number(self.MOVE_QUERY)
-      if user_input > 0 and user_input <= len(board):
+      if user_input >= 0 and user_input <= len(board):
         return user_input - 1 #minus 1 accounts for 0 based array
       else:
         print(self.INVALID_MOVE)
