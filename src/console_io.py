@@ -46,10 +46,10 @@ There are 3 ways to play
   def get_valid_number(self, prompt):
     while True:
       try:
-        user_input = input(prompt)
+        user_input = raw_input(prompt)
         move = int(user_input)
         return move
-      except:
+      except(ValueError):
         print(self.INVALID_ENTRY)
 
   def display_board(self, board):
