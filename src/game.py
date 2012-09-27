@@ -5,6 +5,9 @@ PLAYER_VS_AI = 1
 PLAYER_VS_PLAYER = 2
 AI_VS_AI = 3
 
+PLAYER_ONE = 'X'
+PLAYER_TWO = 'O'
+
 class Game:
 
   NEW_BOARD = ['1', '2', '3', '4', '5', '6', '7', '8', '9']

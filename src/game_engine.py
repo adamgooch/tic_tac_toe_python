@@ -23,13 +23,13 @@ class GameEngine:
   def place_move(self):
     if self.player_one_turn:
       move = self.get_player_one_move()
-      if self.available(move):
-        self.board[move] = 'X'
+      if self.board_analyzer.square_is_available(self.board[move]):
+        self.board[move] = game.PLAYER_ONE
         self.player_one_turn = False
     else:
       move = self.get_player_two_move() 
-      if self.available(move):
-        self.board[move] = 'O'
+      if self.board_analyzer.square_is_available(self.board[move]):
+        self.board[move] = game.PLAYER_TWO
         self.player_one_turn = True
 
   def get_player_one_move(self):
@@ -56,9 +56,3 @@ class GameEngine:
   def ai_is_playing(self):
     return False if self.play_type == game.PLAYER_VS_PLAYER else True
 
-  def available(self, move):
-    if self.board[move] == 'X':
-      return False
-    if self.board[move] == 'O':
-      return False
-    return True

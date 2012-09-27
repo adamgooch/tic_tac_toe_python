@@ -1,5 +1,6 @@
 import sys
 import abc
+import game
 
 from ai_base import AiBase
 from board_analyzer import BoardAnalyzer
@@ -47,12 +48,12 @@ class NegamaxAi(AiBase):
     return maximum
 
   def player_mark(self, player):
-    return 'O' if player == self.PLAYER_O else 'X'
+    return game.PLAYER_TWO if player == self.PLAYER_O else game.PLAYER_ONE
 
   def value_of_node(self):
-    if self.board_analyzer.winner == 'X':
+    if self.board_analyzer.winner == game.PLAYER_ONE:
       return self.PLAYER_X
-    elif self.board_analyzer.winner == 'O':
+    elif self.board_analyzer.winner == game.PLAYER_TWO:
       return self.PLAYER_O
     else:
       return self.NEUTRAL

@@ -51,6 +51,7 @@ class TestGameEngine(unittest.TestCase):
     self.mock_io.get_move.side_effect = self.moves
     game_over_values = [False, False, True]
     self.mock_board_analyzer.game_over.side_effect = game_over_values
+    self.mock_board_analyzer.square_is_available.side_effect = [True, False]
     self.engine.start(src.game.PLAYER_VS_PLAYER, self.board)
     self.assertEqual(self.board[self.moves[0]], 'X')
     self.assertEqual(self.board[self.moves[1]], 'X')

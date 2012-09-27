@@ -27,7 +27,7 @@ There are 3 ways to play
 
   def get_play_type(self):
     while True:
-      print ''.join(self.SHOW_PLAY_TYPES)
+      print self.SHOW_PLAY_TYPES
       play_type = self.get_valid_number(self.PLAY_TYPE_QUERY)
       if play_type <= self.PLAY_TYPES and play_type > 0:
         return play_type

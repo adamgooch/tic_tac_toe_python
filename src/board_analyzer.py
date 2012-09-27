@@ -1,16 +1,20 @@
+import game
+
 class BoardAnalyzer:
 
   win_sets = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
               [0, 3, 6], [1, 4, 7], [2, 5, 8],
               [0, 4, 8], [2, 4, 6]]
 
+  NO_WINNER = 'Nobody'
+
   def game_over(self, board):
-    if self.get_winner('X', board):
+    if self.get_winner(game.PLAYER_ONE, board):
       return True
-    elif self.get_winner('O', board):
+    elif self.get_winner(game.PLAYER_TWO, board):
       return True
-    elif self.open_squares(board) == 0:
-      self.winner = 'Nobody'
+    elif not self.any_open_squares(board):
+      self.winner = self.NO_WINNER
       return True
     return False
 
@@ -20,16 +24,15 @@ class BoardAnalyzer:
       for square in win_set:
         if board[square] == player:
           count += 1
-      if count == 3:
+      if count == len(win_set):
         self.winner = player
         return True
 
-  def open_squares(self, board):
-    open_squares = 0
+  def any_open_squares(self, board):
     for square in board:
       if self.square_is_available(square):
-        open_squares += 1
-    return open_squares
+        return True
+    return False
 
   def get_available_squares(self, board):
     available_squares = []
@@ -41,4 +44,4 @@ class BoardAnalyzer:
     return available_squares
 
   def square_is_available(self, square):
-    return False if square == 'X' or square == 'O' else True
+    return False if square == game.PLAYER_ONE or square == game.PLAYER_TWO else True

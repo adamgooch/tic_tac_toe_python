@@ -9,7 +9,7 @@ class IoBase(object):
 
   @abc.abstractmethod
   def get_play_type(self):
-    """Return a number from 1 to 3."""
+    """Return a number from within the range of play types."""
     return
 
   @abc.abstractmethod
