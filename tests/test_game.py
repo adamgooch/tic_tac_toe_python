@@ -1,5 +1,4 @@
 import unittest
-import sys
 import src.game
 
 from mock import *
@@ -24,3 +23,12 @@ class TestGame(unittest.TestCase):
   def test_begin_starts_the_game_engine(self):
     self.game.begin()
     self.mock_engine.assert_has_calls([call.start(self.mock_io.get_play_type())])
+
+  def test_play_again_asks_if_the_user_would_like_to_play_again(self):
+    self.game.play_again()
+    self.mock_io.assert_has_calls([call.get_play_again()])
+
+  def test_play_again_starts_a_new_game_if_the_answer_is_yes(self):
+    self.mock_io.get_play_again.side_effect = ['y', 'n']
+    self.game.play_again()
+    self.mock_io.assert_has_calls([call.greet()])

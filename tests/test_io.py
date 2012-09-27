@@ -85,3 +85,11 @@ class TestIo(unittest.TestCase):
     self.mock_stdout.assert_has_calls([
       call.write(str('X ' + self.io.WINNING_MESSAGE).center(self.io.MESSAGE_WIDTH))])
 
+  def test_get_play_again_asks_user_if_she_wants_to_play_again(self):
+    self.mock_stdin.readline.return_value = 'y\n'
+    self.io.get_play_again()
+    self.mock_stdout.assert_has_calls([call.write(self.io.PLAY_AGAIN_QUERY)])
+
+  def test_get_play_again_returns_y_if_the_answer_is_yes(self):
+    self.mock_stdin.readline.return_value = 'y\n'
+    self.assertEquals('y', self.io.get_play_again())

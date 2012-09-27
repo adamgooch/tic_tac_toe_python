@@ -1,5 +1,4 @@
 from io import Io
-from board import Board
 
 PLAYER_VS_AI = 1
 PLAYER_VS_PLAYER = 2
@@ -15,3 +14,10 @@ class Game:
     self.io.greet()
     self.play_type = self.io.get_play_type()
     self.engine.start(self.play_type)
+    self.play_again()
+
+  def play_again(self):
+    play_again_answer = self.io.get_play_again()
+    if play_again_answer == 'y':
+      self.begin()
+

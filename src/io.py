@@ -10,13 +10,14 @@ There are 3 ways to play
 2: Player vs. Player
 3: Computer vs. Computer
 """
-  GREETING = 'Welcome to Tic Tac Toe\n'
+  GREETING = 'Welcome to Tic Tac Toe'
   PLAY_TYPE_QUERY = 'How do you want to play? '
   INVALID_PLAY_TYPE = 'Invalid Play Type'
   MOVE_QUERY = '(0 to Quit) What is your move? '
   INVALID_ENTRY = 'Invalid Entry\n'
   INVALID_MOVE = 'Invalid Move\n'
   WINNING_MESSAGE = 'WINS!\n'
+  PLAY_AGAIN_QUERY = 'Would you like to play again? (y or n) '
 
   def greet(self):
     print self.GREETING
@@ -67,6 +68,10 @@ There are 3 ways to play
   def display_game_over_message(self, winner):
     full_message = ' '.join([winner, self.WINNING_MESSAGE])
     print str(full_message).center(self.MESSAGE_WIDTH)
+
+  def get_play_again(self):
+    answer = raw_input(self.PLAY_AGAIN_QUERY)
+    return answer
 
   def clear_terminal(self):
     print chr(27) + "[2J"
