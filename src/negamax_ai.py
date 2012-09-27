@@ -1,11 +1,14 @@
 import sys
+import abc
 
+from ai_base import AiBase
 from board_analyzer import BoardAnalyzer
 from copy import copy
 
-class Ai:
+class NegamaxAi(AiBase):
   PLAYER_O = 1
   PLAYER_X = -1
+  NEUTRAL = 0
 
   def get_move(self, board, player):
     self.board_analyzer = BoardAnalyzer()
@@ -52,4 +55,4 @@ class Ai:
     elif self.board_analyzer.winner == 'O':
       return self.PLAYER_O
     else:
-      return 0
+      return self.NEUTRAL

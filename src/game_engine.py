@@ -5,13 +5,13 @@ class GameEngine:
 
   QUIT = -1
 
-  def __init__(self, board, io, ai, board_analyzer):
-    self.board = board
+  def __init__(self, io, ai, board_analyzer):
     self.io = io
     self.ai = ai
     self.board_analyzer = board_analyzer
 
-  def start(self, play_type):
+  def start(self, play_type, board):
+    self.board = board
     self.play_type = play_type
     self.player_one_turn = True
     while not(self.board_analyzer.game_over(self.board)):

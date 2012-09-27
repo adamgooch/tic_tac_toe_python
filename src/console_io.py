@@ -1,4 +1,7 @@
-class Io:
+import abc
+from io_base import IoBase
+
+class ConsoleIo(IoBase):
 
   PLAY_TYPES = 3
   MESSAGE_WIDTH = 26

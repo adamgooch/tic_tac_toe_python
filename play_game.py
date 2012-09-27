@@ -1,13 +1,12 @@
 from src.game import Game
-from src.io import Io
+from src.console_io import ConsoleIo
 from src.game_engine import GameEngine
 from src.board_analyzer import BoardAnalyzer
-from src.ai import Ai
+from src.negamax_ai import NegamaxAi
 
-io = Io()
-ai = Ai()
+io = ConsoleIo()
+ai = NegamaxAi()
 board_analyzer = BoardAnalyzer()
-engine = GameEngine(['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    io, ai, board_analyzer)
+engine = GameEngine(io, ai, board_analyzer)
 game = Game(io, engine)
 game.begin()
