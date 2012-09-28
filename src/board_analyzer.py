@@ -43,5 +43,5 @@ class BoardAnalyzer:
       index += 1
     return available_squares
 
-  def square_is_available(self, square):
-    return False if square == game.PLAYER_ONE or square == game.PLAYER_TWO else True
+  def square_is_available(self, square_contents):
+    return False if square_contents == game.PLAYER_ONE or square_contents == game.PLAYER_TWO else True

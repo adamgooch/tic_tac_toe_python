@@ -22,3 +22,5 @@ Unpack the downloaded file then `cd` into the unpacked file and run:
 To run the tests, `cd` into the tic_tac_toe_python directory and enter:
 
     python -m unittest discover
+
+If you don't have Python, get it at www.python.org/getit/
