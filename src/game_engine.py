@@ -14,23 +14,25 @@ class GameEngine:
     self.board = board
     self.play_type = play_type
     self.player_one_turn = True
+    self.run()
+
+  def run(self):
     while not(self.board_analyzer.game_over(self.board)):
       self.io.display_board(self.board)
       self.place_move()
+    self.stop()
+
+  def stop(self):
     self.io.display_board(self.board)
     self.io.display_game_over_message(self.board_analyzer.winner)
 
   def place_move(self):
     if self.player_one_turn:
       move = self.get_player_one_move()
-      if self.board_analyzer.square_is_available(self.board[move]):
-        self.board[move] = game.PLAYER_ONE
-        self.player_one_turn = False
+      self.place_player_one_move(move)
     else:
       move = self.get_player_two_move() 
-      if self.board_analyzer.square_is_available(self.board[move]):
-        self.board[move] = game.PLAYER_TWO
-        self.player_one_turn = True
+      self.place_player_two_move(move)
 
   def get_player_one_move(self):
     if self.human_is_playing():
@@ -41,6 +43,11 @@ class GameEngine:
       move = self.ai.get_move(self.board, self.ai.PLAYER_X)
     return move
 
+  def place_player_one_move(self, move):
+    if self.board_analyzer.square_is_available(self.board[move]):
+      self.board[move] = game.PLAYER_ONE
+      self.player_one_turn = False
+
   def get_player_two_move(self):
     if self.ai_is_playing():
       move = self.ai.get_move(self.board, self.ai.PLAYER_O)
@@ -49,6 +56,11 @@ class GameEngine:
       if move == self.QUIT:
         sys.exit()
     return move
+
+  def place_player_two_move(self, move):
+    if self.board_analyzer.square_is_available(self.board[move]):
+      self.board[move] = game.PLAYER_TWO
+      self.player_one_turn = True
 
   def human_is_playing(self):
     return False if self.play_type == game.AI_VS_AI else True

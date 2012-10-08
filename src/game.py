@@ -1,5 +1,4 @@
 from copy import copy
-from io_base import IoBase
 
 PLAYER_VS_AI = 1
 PLAYER_VS_PLAYER = 2

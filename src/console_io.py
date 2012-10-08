@@ -3,7 +3,7 @@ from io_base import IoBase
 
 class ConsoleIo(IoBase):
 
-  PLAY_TYPES = 3
+  NUMBER_OF_PLAY_TYPES = 3
   MESSAGE_WIDTH = 26
 
   SHOW_PLAY_TYPES = """
@@ -29,7 +29,7 @@ There are 3 ways to play
     while True:
       print self.SHOW_PLAY_TYPES
       play_type = self.get_valid_number(self.PLAY_TYPE_QUERY)
-      if play_type <= self.PLAY_TYPES and play_type > 0:
+      if play_type <= self.NUMBER_OF_PLAY_TYPES and play_type > 0:
         return play_type
       else:
         self.clear_terminal()
