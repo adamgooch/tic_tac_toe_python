@@ -9,16 +9,16 @@ class BoardAnalyzer:
   NO_WINNER = 'Nobody'
 
   def game_over(self, board):
-    if self.get_winner(game.PLAYER_ONE, board):
+    if self.is_winner(game.PLAYER_ONE, board):
       return True
-    elif self.get_winner(game.PLAYER_TWO, board):
+    elif self.is_winner(game.PLAYER_TWO, board):
       return True
     elif board.no_open_squares():
       self.winner = self.NO_WINNER
       return True
     return False
 
-  def get_winner(self, player, board):
+  def is_winner(self, player, board):
     for win_set in self.win_sets:
       count = 0
       for square in win_set:
