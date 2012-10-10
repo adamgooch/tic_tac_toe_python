@@ -21,7 +21,7 @@ class Board:
     else:
       return True
 
-  def squares(self):
+  def number_of_squares(self):
     return len(self.board_array)
 
   def get_square(self, square):

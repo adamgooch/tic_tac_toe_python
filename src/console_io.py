@@ -38,7 +38,7 @@ There are 3 ways to play
   def get_move(self, board):
     while True:
       user_input = self.get_valid_number(self.MOVE_QUERY)
-      if user_input >= 0 and user_input <= board.squares():
+      if user_input >= 0 and user_input <= board.number_of_squares():
         return user_input
       else:
         print(self.INVALID_MOVE)

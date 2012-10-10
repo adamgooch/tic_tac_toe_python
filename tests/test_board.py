@@ -23,7 +23,7 @@ class TestBoard(unittest.TestCase):
     self.assertFalse(self.board.square_is_available(0))
 
   def test_squares_returns_the_number_of_squares_on_the_board(self):
-    self.assertEqual(9, self.board.squares())
+    self.assertEqual(9, self.board.number_of_squares())
 
   def test_get_square_returns_the_contents_of_the_given_square(self):
     self.assertEqual('1', self.board.get_square(1))
