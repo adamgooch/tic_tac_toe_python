@@ -1,3 +1,4 @@
+from board import Board
 from copy import copy
 
 PLAYER_VS_AI = 1
@@ -9,7 +10,6 @@ PLAYER_TWO = 'O'
 
 class Game:
 
-  NEW_BOARD = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
   AFFIRMATIVE_ANSWER = 'y'
 
   def __init__(self, io, engine):
@@ -21,7 +21,7 @@ class Game:
     while self.play_again:
       self.io.greet()
       self.play_type = self.io.get_play_type()
-      self.engine.start(self.play_type, copy(self.NEW_BOARD))
+      self.engine.start(self.play_type, Board())
       self.ask_to_play_again()
 
   def ask_to_play_again(self):

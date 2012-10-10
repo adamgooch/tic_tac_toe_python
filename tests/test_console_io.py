@@ -2,13 +2,14 @@ import unittest
 import sys
 
 from src.console_io import ConsoleIo
+from src.board import Board
 from mock import *
 
 class TestConsoleIo(unittest.TestCase):
 
   def setUp(self):
     self.io = ConsoleIo()
-    self.board = ['1', '2', '3', '4', 'X', '6', '7', '8', '9']
+    self.board = Board(['1', '2', '3', '4', 'X', '6', '7', '8', '9'])
 
     self.mock_stdin = Mock(spec=sys.stdin)
     self.real_stdin = sys.stdin

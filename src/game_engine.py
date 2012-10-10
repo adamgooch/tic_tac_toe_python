@@ -3,7 +3,7 @@ import game
 
 class GameEngine:
 
-  QUIT = -1
+  QUIT = 0
 
   def __init__(self, io, ai, board_analyzer):
     self.io = io
@@ -29,23 +29,21 @@ class GameEngine:
   def place_move(self):
     if self.player_one_turn:
       move = self.get_player_one_move()
-      self.place_player_one_move(move)
+      self.make_player_one_move(move)
     else:
       move = self.get_player_two_move() 
-      self.place_player_two_move(move)
+      self.make_player_two_move(move)
 
   def get_player_one_move(self):
     if self.human_is_playing():
       move = self.io.get_move(self.board)
-      if move == self.QUIT:
-        sys.exit()
+      self.check_for_quit(move)
     else:
       move = self.ai.get_move(self.board, self.ai.PLAYER_X)
     return move
 
-  def place_player_one_move(self, move):
-    if self.board_analyzer.square_is_available(self.board[move]):
-      self.board[move] = game.PLAYER_ONE
+  def make_player_one_move(self, move):
+    if self.board.put_mark_in_square(game.PLAYER_ONE, move):
       self.player_one_turn = False
 
   def get_player_two_move(self):
@@ -53,14 +51,16 @@ class GameEngine:
       move = self.ai.get_move(self.board, self.ai.PLAYER_O)
     else:
       move = self.io.get_move(self.board)
-      if move == self.QUIT:
-        sys.exit()
+      self.check_for_quit(move)
     return move
 
-  def place_player_two_move(self, move):
-    if self.board_analyzer.square_is_available(self.board[move]):
-      self.board[move] = game.PLAYER_TWO
+  def make_player_two_move(self, move):
+    if self.board.put_mark_in_square(game.PLAYER_TWO, move):
       self.player_one_turn = True
+
+  def check_for_quit(self, move):
+    if move == self.QUIT:
+        sys.exit()
 
   def human_is_playing(self):
     return False if self.play_type == game.AI_VS_AI else True

@@ -38,8 +38,8 @@ There are 3 ways to play
   def get_move(self, board):
     while True:
       user_input = self.get_valid_number(self.MOVE_QUERY)
-      if user_input >= 0 and user_input <= len(board):
-        return user_input - 1 #minus 1 accounts for 0 based array
+      if user_input >= 0 and user_input <= board.squares():
+        return user_input
       else:
         print(self.INVALID_MOVE)
 
@@ -66,7 +66,15 @@ There are 3 ways to play
          |     |
       %s  |  %s  |  %s
          |     |
-    """ % (board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8])
+    """ % (board.get_square(1),
+           board.get_square(2),
+           board.get_square(3),
+           board.get_square(4),
+           board.get_square(5),
+           board.get_square(6),
+           board.get_square(7),
+           board.get_square(8),
+           board.get_square(9))
 
   def display_game_over_message(self, winner):
     full_message = ' '.join([winner, self.WINNING_MESSAGE])

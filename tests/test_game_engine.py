@@ -3,12 +3,13 @@ import sys
 import src.game
 
 from src.game_engine import GameEngine
+from src.board import Board
 from mock import *
 
 class TestGameEngine(unittest.TestCase):
 
   def setUp(self):
-    self.board = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    self.board = Board(['1', '2', '3', '4', '5', '6', '7', '8', '9'])
     self.mock_io = Mock()
     self.mock_ai = Mock()
     self.mock_board_analyzer = Mock()
@@ -28,7 +29,7 @@ class TestGameEngine(unittest.TestCase):
 
   def test_start_puts_move_on_the_board(self):
     self.engine.start(src.game.PLAYER_VS_PLAYER, self.board)
-    self.assertEqual(self.board[self.moves[0]], 'X')
+    self.assertEqual(self.board.get_square(self.moves[0]), 'X')
 
   def test_start_checks_if_game_is_over(self):
     self.engine.start(src.game.PLAYER_VS_PLAYER, self.board)
@@ -43,8 +44,8 @@ class TestGameEngine(unittest.TestCase):
     game_over_values = [False, False, True]
     self.mock_board_analyzer.game_over.side_effect = game_over_values
     self.engine.start(src.game.PLAYER_VS_PLAYER, self.board)
-    self.assertEqual(self.board[self.moves[0]], 'X')
-    self.assertEqual(self.board[self.moves[1]], 'O')
+    self.assertEqual(self.board.get_square(self.moves[0]), 'X')
+    self.assertEqual(self.board.get_square(self.moves[1]), 'O')
 
   def test_place_move_does_not_allow_move_to_be_placed_in_same_square(self):
     self.moves = [2, 2]
@@ -53,8 +54,8 @@ class TestGameEngine(unittest.TestCase):
     self.mock_board_analyzer.game_over.side_effect = game_over_values
     self.mock_board_analyzer.square_is_available.side_effect = [True, False]
     self.engine.start(src.game.PLAYER_VS_PLAYER, self.board)
-    self.assertEqual(self.board[self.moves[0]], 'X')
-    self.assertEqual(self.board[self.moves[1]], 'X')
+    self.assertEqual(self.board.get_square(self.moves[0]), 'X')
+    self.assertEqual(self.board.get_square(self.moves[1]), 'X')
 
   def test_place_move_allows_ai_to_move_second(self):
     ai_moves = [5]

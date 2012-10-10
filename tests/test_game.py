@@ -20,10 +20,6 @@ class TestGame(unittest.TestCase):
     self.mock_io.assert_has_calls([call.get_play_type()])
     self.assertEqual(self.game.play_type, src.game.PLAYER_VS_PLAYER)
 
-  def test_begin_starts_the_game_engine(self):
-    self.game.begin()
-    self.mock_engine.assert_has_calls([call.start(self.mock_io.get_play_type(), self.game.NEW_BOARD)])
-
   def test_play_again_asks_if_the_user_would_like_to_play_again(self):
     self.game.ask_to_play_again()
     self.mock_io.assert_has_calls([call.get_play_again()])

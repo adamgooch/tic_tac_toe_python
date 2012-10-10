@@ -1,13 +1,14 @@
 import unittest
 
 from src.board_analyzer import BoardAnalyzer
+from src.board import Board
 
 class TestBoardAnalyzer(unittest.TestCase):
 
-  no_winner_board = [ 'X', 'O', 'X', 'O', 'O', 'X', 'X', 'X', 'O' ]
-  empty_board = [ '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
-  x_wins_board = [ 'X', 'X', 'X', 'O', '5', 'O', '7', 'O', '9' ]
-  o_wins_board = [ 'O', 'O', 'O', 'X', '5', 'X', '7', 'X', '9' ]
+  no_winner_board = Board([ 'X', 'O', 'X', 'O', 'O', 'X', 'X', 'X', 'O' ])
+  empty_board = Board([ '1', '2', '3', '4', '5', '6', '7', '8', '9' ])
+  x_wins_board = Board([ 'X', 'X', 'X', 'O', '5', 'O', '7', 'O', '9' ])
+  o_wins_board = Board([ 'O', 'O', 'O', 'X', '5', 'X', '7', 'X', '9' ])
 
   def setUp(self):
     self.board_analyzer = BoardAnalyzer()
@@ -36,14 +37,10 @@ class TestBoardAnalyzer(unittest.TestCase):
     self.board_analyzer.game_over(self.o_wins_board)
     self.assertEqual('O', self.board_analyzer.winner)
 
-  def test_get_available_squares_returns_squares_without_an_x_or_o(self):
-    board = ['1', 'X', 'O', '4', '5', 'X', 'O', 'X', 'O']
-    self.assertEqual([0, 3, 4], self.board_analyzer.get_available_squares(board))
-
   def test_x_wins_diagonally(self):
-    board = ['X', 'O', 'X', 'O', 'X', 'O', 'X', '8', '9']
+    board = Board(['X', 'O', 'X', 'O', 'X', 'O', 'X', '8', '9'])
     self.assertTrue([self.board_analyzer.game_over(board)])
 
   def test_nobody_wins(self):
-    board = ['X', '2', 'O', '4', '5', '6', '7', '8', '9']
+    board = Board(['X', '2', 'O', '4', '5', '6', '7', '8', '9'])
     self.assertFalse(self.board_analyzer.game_over(board))
